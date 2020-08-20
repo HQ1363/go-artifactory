@@ -1,4 +1,4 @@
-module go-artifactory
+module github.com/HQ1363/go-artifactory
 
 go 1.13
 
