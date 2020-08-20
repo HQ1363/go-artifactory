@@ -2,6 +2,7 @@ package artifactory
 
 import (
 	"bytes"
+	"crypto/md5"
 	"crypto/sha1"
 	"encoding/json"
 	"errors"
@@ -137,6 +138,11 @@ func (c *Client) makeRequest(method string, path string, options map[string]stri
 		_, _ = h.Write(buf.Bytes())
 		chkSum := h.Sum(nil)
 		req.Header.Add("X-Checksum-Sha1", fmt.Sprintf("%x", chkSum))
+		// 这里加一个md5的checkout，和py的包保持一致
+		md5Header := md5.New()
+		_, _ = md5Header.Write(buf.Bytes())
+		md5Sum := md5Header.Sum(nil)
+		req.Header.Add("X-Checksum-Md5", fmt.Sprintf("%x", md5Sum))
 	}
 	req.Header.Add("user-agent", "artifactory-go."+Version.String())
 	req.Header.Add("X-Result-Detail", "info, properties")
