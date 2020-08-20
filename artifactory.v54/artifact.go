@@ -22,6 +22,12 @@ type AQLProperties struct {
 	Value string `json:"value,omitempty"`
 }
 
+// Children Item
+type ChildItem struct {
+	URI    string `json:"uri"`
+	Folder bool   `json:"folder"`
+}
+
 // FileInfo represents the json returned by the artifactory API for a file
 type FileInfo struct {
 	URI          string             `json:"uri"`
@@ -37,6 +43,7 @@ type FileInfo struct {
 	Size         string             `json:"size"`
 	MimeType     string             `json:"mimeType"`
 	Properties   ArtifactProperties `json:"properties"`
+	Children     []ChildItem        `json:"children"`
 	Checksums    struct {
 		MD5    string `json:"md5"`
 		SHA1   string `json:"sha1"`
